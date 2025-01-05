@@ -46,7 +46,7 @@ CREATE TABLE Mahasiswa (
 ```
 
 
-#### Lab Assistant Table (AsistenPraktikum)
+#### 2.1 Lab Assistant Table (AsistenPraktikum)
 ```sql
 CREATE TABLE AsistenPraktikum (
     id_asprak int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -58,7 +58,7 @@ CREATE TABLE AsistenPraktikum (
 ```
 
 
-#### Subject Table (Matakuliah)
+#### 2.2 Subject Table (Matakuliah)
 ```sql
 CREATE TABLE Matakuliah (
     id_matkul int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -69,7 +69,7 @@ CREATE TABLE Matakuliah (
 ```
 
 
-#### Laboratory Room Table (RuangLabor)
+#### 2.3 Laboratory Room Table (RuangLabor)
 ```sql
 CREATE TABLE RuangLabor (
     id_labor int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -80,7 +80,7 @@ CREATE TABLE RuangLabor (
 ```
 
 
-#### Course Schedule Table (JadwalKuliah)
+#### 2.4 Course Schedule Table (JadwalKuliah)
 ```sql
 CREATE TABLE JadwalKuliah (
     id_jadwal int AUTO_INCREMENT PRIMARY KEY,
@@ -106,7 +106,7 @@ COLLATE=utf8mb4_general_ci;
 ```
 ## STEP 3: Input 20 Rows Data Master
 
-### Student Table (Mahasiswa)
+### 3.1 Student Table (Mahasiswa)
 ```sql
 INSERT INTO mahasiswa(id_mhs, nama_mhs, npm_mhs, Semester, angkatan_mhs, kontak_mhs) VALUES 
 (01,'M Akbar Ramadhan',4523210132,3,2023,083196390884),
@@ -133,7 +133,7 @@ INSERT INTO mahasiswa(id_mhs, nama_mhs, npm_mhs, Semester, angkatan_mhs, kontak_
 
 
 
-### Lab Assistant (asistenpraktikum)
+### 3.2 Lab Assistant (asistenpraktikum)
 ```sql
 INSERT INTO asistenpraktikum(nama_asprak, npm_asprak, email_asprak, kontak_asprak) VALUES
 ('Apriani Simamora', '4522210150', 'kakapri121@gmail.com', '082272139443),
@@ -159,7 +159,7 @@ INSERT INTO asistenpraktikum(nama_asprak, npm_asprak, email_asprak, kontak_aspra
 ```
 
 
-### Subject (matakuliah)
+### 3.3 Subject (matakuliah)
 ```sql
 INSERT INTO matakuliah(id_matkul, nama_matkul, sks_matkul, dosen_matkul) VALUES 
 (101,'Algoritma Pemrograman',3,'Dra. Sri Rezeki Candra M.Kom'),
@@ -184,7 +184,7 @@ INSERT INTO matakuliah(id_matkul, nama_matkul, sks_matkul, dosen_matkul) VALUES
 (120,'Secure Programming',3,'Gregorius Hendita S.Si, M.Cs')
 ```
 
-### Course Schedule (Ruanglabor)
+### 3.4 Course Schedule (Ruanglabor)
 ```sql
 (101, 1, 'Tidak Tersedia', 'Digunakan Asprak'),
 (102, 2, 'Tidak Tersedia', 'Digunakan Asprak'),
@@ -208,7 +208,7 @@ INSERT INTO matakuliah(id_matkul, nama_matkul, sks_matkul, dosen_matkul) VALUES
 (120, 20, 'Tidak Tersedia', 'Digunakan Mahasiswa');
 ```
 
-### Course Schedule (Jadwalkuliah)
+### 3.5 Course Schedule (Jadwalkuliah)
 ```sql
 INSERT INTO jadwalkuliah(id_jadwal, id_mhs, id_asprak, id_matkul, id_labor, hari_pemakaian, tanggal_pemakaian, jam_mulai, jam_selesai) 
 VALUES 
@@ -237,7 +237,7 @@ VALUES
 
 
 ## STEP 4: Implementation Transaction
-### Atomicity (Commit & Rollback
+### 4.1 Atomicity (Commit & Rollback
 ```sql
 START TRANSACTION;
 INSERT INTO JadwalKuliah (id_jadwal, id_mhs, id_asprak, id_matkul, id_labor, hari_pemakaian, tanggal_pemakaian, jam_mulai, jam_selesai) VALUES 
@@ -253,9 +253,9 @@ DELETE FROM JadwalKuliah WHERE id_jadwal = 21;
 DELETE FROM JadwalKuliah WHERE id_jadwal = 22;
 
 ROLLBACK;
-
-### Consistency Invalid User
-sql
+```
+### 4.2 Consistency Invalid User
+```sql
 START TRANSACTION;
 UPDATE jadwalkuliah SET id_matkul = NULL
 WHERE id_mhs = 1;
@@ -264,7 +264,7 @@ COMMIT;
 SELECT * FROM jadwalkuliah;
 ```
 
-### Isolation
+### 4.3 Isolation
 ```sql
 START TRANSACTION;
 UPDATE jadwalkuliah 
@@ -278,7 +278,7 @@ SELECT * FROM jadwalkuliah WHERE id_jadwal = 21 FOR UPDATE;
 COMMIT;
 ```
 
-## Buatkan skenario apabila ada kesalahan maka seluruh transaksi batal
+## STEP 5: Buatkan skenario apabila ada kesalahan maka seluruh transaksi batal
 ```sql
 START TRANSACTION; 
 DECLARE EXIT HANDLER FOR SQLEXCEPTION 
